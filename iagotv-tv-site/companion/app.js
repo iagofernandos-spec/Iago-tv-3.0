@@ -62,6 +62,9 @@ const STRINGS = {
     catalogs_sub: 'Listas exibidas na Home, Filmes, Séries ou ocultas',
     catalogs_empty: 'Nenhum catálogo configurado para este perfil',
     catalogs_tip: '💡 Adicione catálogos dos add-ons instalados e escolha onde eles aparecem: Home, Filmes, Séries ou oculto.',
+    catalog_tab_note: (d) => `Listas que aparecem na aba ${d}. Use ↑ ↓ para reordenar.`,
+    catalogs_tab_empty: 'Nenhuma lista nesta aba ainda — adicione catálogos acima.',
+    drag_hint: 'Reordenar',
     dest_home: 'Home', dest_movies: 'Filmes', dest_series: 'Séries', dest_none: 'Oculto',
     dest_all: 'Tudo',
     catalog_enabled: 'Visível', catalog_disabled: 'Oculto',
@@ -168,6 +171,9 @@ const STRINGS = {
     catalogs_sub: 'Lists shown on Home, Movies, Series or hidden',
     catalogs_empty: 'No catalogs configured for this profile',
     catalogs_tip: '💡 Add catalogs from your installed add-ons and choose where they appear: Home, Movies, Series or hidden.',
+    catalog_tab_note: (d) => `Lists that appear on the ${d} tab. Use ↑ ↓ to reorder.`,
+    catalogs_tab_empty: 'No lists on this tab yet — add catalogs above.',
+    drag_hint: 'Reorder',
     dest_home: 'Home', dest_movies: 'Movies', dest_series: 'Series', dest_none: 'Hidden',
     dest_all: 'All',
     catalog_enabled: 'Visible', catalog_disabled: 'Hidden',
@@ -269,6 +275,9 @@ const STRINGS = {
     catalogs_sub: 'רשימות המוצגות ב-Home, סרטים, סדרות או מוסתרות',
     catalogs_empty: 'אין קטלוגים מוגדרים לפרופיל זה',
     catalogs_tip: '💡 הוסף קטלוגים מההרחבות המותקנות ובחר היכן הם יופיעו: Home, סרטים, סדרות או מוסתר.',
+    catalog_tab_note: (d) => `רשימות המופיעות בכרטיסייה ${d}. השתמש ב-↑ ↓ כדי לסדר מחדש.`,
+    catalogs_tab_empty: 'אין רשימות בכרטיסייה זו עדיין — הוסף קטלוגים למעלה.',
+    drag_hint: 'סדר מחדש',
     dest_home: 'Home', dest_movies: 'סרטים', dest_series: 'סדרות', dest_none: 'מוסתר',
     dest_all: 'הכל',
     catalog_enabled: 'גלוי', catalog_disabled: 'מוסתר',
@@ -379,6 +388,7 @@ let state = {
   catalogAddons: [], // addons with their manifest catalogs loaded
   activeSection: 'dashboard',
   historyTab: 'movies',
+  catalogTab: 'home',
   settingsProfileId: 1,
 };
 
@@ -1005,13 +1015,34 @@ async function renderCatalogs() {
     ? state.catalogAddons.map(a => `<option value="${escapeAttr(a.id)}">${escapeHtml(a.name || a.url)}</option>`).join('')
     : `<option value="">—</option>`;
 
+  const tabs = [
+    { id: 'home', label: t('dest_home'), icon: '<path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>' },
+    { id: 'movies', label: t('dest_movies'), icon: '<rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>' },
+    { id: 'series', label: t('dest_series'), icon: '<rect x="3" y="3" width="18" height="18" rx="3"/><path d="M9 9h6M9 12h6M9 15h4"/>' },
+    { id: 'none', label: t('dest_none'), icon: '<circle cx="12" cy="12" r="10"/><path d="M4.93 4.93l14.14 14.14"/>' },
+  ];
+
+  const visibleItems = items.filter(i => (i.destination || 'home') === state.catalogTab);
+  const tabCounts = {};
+  tabs.forEach(tb => { tabCounts[tb.id] = items.filter(i => (i.destination || 'home') === tb.id).length; });
+
   main.innerHTML = `
     <div class="section-header">
       <div><div class="section-title">${t('catalogs_title')}</div><div class="section-sub">${t('catalogs_sub')}</div></div>
     </div>
 
+    <div class="tabs catalog-tabs">
+      ${tabs.map(tb => `
+        <button class="tab ${state.catalogTab === tb.id ? 'active' : ''}" onclick="state.catalogTab='${tb.id}';renderSection()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14">${tb.icon}</svg>
+          ${tb.label}
+          <span class="tab-count">${tabCounts[tb.id] || 0}</span>
+        </button>
+      `).join('')}
+    </div>
+
     <div class="card">
-      <div style="font-size:16px;font-weight:700;margin-bottom:12px">${t('catalog_add_title')}</div>
+      <div style="font-size:16px;font-weight:700;margin-bottom:12px">${t('catalog_add_title')} → ${t('dest_' + state.catalogTab)}</div>
       <div class="form-group" style="margin-bottom:12px">
         <label class="form-label">${t('catalog_addon_label')}</label>
         <select class="form-select" id="catalog-addon" onchange="onCatalogAddonChange()">
@@ -1019,26 +1050,21 @@ async function renderCatalogs() {
           ${addonOptions}
         </select>
       </div>
-      <div class="form-group" style="margin-bottom:12px" id="catalog-list-group" style="display:none">
+      <div class="form-group" style="margin-bottom:12px;display:none" id="catalog-list-group">
         <label class="form-label">${t('catalog_list_label')}</label>
         <select class="form-select" id="catalog-list"></select>
-      </div>
-      <div class="form-group" style="margin-bottom:12px">
-        <label class="form-label">${t('catalog_dest_label')}</label>
-        <select class="form-select" id="catalog-dest">
-          <option value="home">${t('dest_home')}</option>
-          <option value="movies">${t('dest_movies')}</option>
-          <option value="series">${t('dest_series')}</option>
-          <option value="none">${t('dest_none')}</option>
-        </select>
       </div>
       <button class="btn btn-primary" onclick="addCatalogItem()">${t('catalog_add')}</button>
     </div>
 
     ${items.length === 0 ? emptyState(t('catalogs_empty')) : `
+    <div class="catalog-tab-note">${t('catalog_tab_note', state.catalogTab)}</div>
     <div class="card" style="padding:0 20px">
-      ${items.map((item, idx) => `
-        <div class="list-item" style="flex-wrap:wrap">
+      ${visibleItems.length === 0 ? emptyState(t('catalogs_tab_empty')) : visibleItems.map((item, idx) => `
+        <div class="list-item" style="flex-wrap:wrap" id="cat-${escapeAttr(item.addon_id)}-${escapeAttr(item.catalog_id)}">
+          <div class="item-drag-handle" title="${t('drag_hint')}">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><circle cx="9" cy="6" r="1.6"/><circle cx="15" cy="6" r="1.6"/><circle cx="9" cy="12" r="1.6"/><circle cx="15" cy="12" r="1.6"/><circle cx="9" cy="18" r="1.6"/><circle cx="15" cy="18" r="1.6"/></svg>
+          </div>
           <div style="display:flex;gap:10px;flex-direction:column;flex:1;min-width:200px">
             <div class="item-title">${escapeHtml(catalogItemDisplayName(item))}</div>
             <div class="item-sub">${escapeHtml(catalogItemSub(item))}</div>
@@ -1057,8 +1083,8 @@ async function renderCatalogs() {
               </select>
             </div>
             <div style="display:flex;gap:6px;align-items:center">
-              <button class="btn btn-ghost" style="padding:4px 8px;font-size:11px" onclick="moveCatalog(${idx}, -1)" ${idx === 0 ? 'disabled' : ''}>↑ ${t('move_up')}</button>
-              <button class="btn btn-ghost" style="padding:4px 8px;font-size:11px" onclick="moveCatalog(${idx}, 1)" ${idx === items.length - 1 ? 'disabled' : ''}>↓ ${t('move_down')}</button>
+              <button class="btn btn-ghost" style="padding:4px 8px;font-size:11px" onclick="moveCatalog(${idx}, -1)" ${idx === 0 ? 'disabled' : ''}>↑</button>
+              <button class="btn btn-ghost" style="padding:4px 8px;font-size:11px" onclick="moveCatalog(${idx}, 1)" ${idx === visibleItems.length - 1 ? 'disabled' : ''}>↓</button>
               <button class="btn btn-danger" style="padding:4px 10px;font-size:11px" onclick="removeCatalogItem(${idx})">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/></svg>
               </button>
@@ -1101,7 +1127,7 @@ function onCatalogAddonChange() {
 async function addCatalogItem() {
   const addonId = document.getElementById('catalog-addon')?.value;
   const list = document.getElementById('catalog-list');
-  const dest = document.getElementById('catalog-dest')?.value || 'home';
+  const dest = state.catalogTab || 'home';
   if (!addonId || !list || !list.value) { toast(t('catalog_choose_addon'), 'err'); return; }
   const addon = state.catalogAddons.find(a => a.id === addonId || a.addonId === addonId);
   if (!addon) { toast(t('catalog_manifest_err'), 'err'); return; }
@@ -1128,6 +1154,7 @@ async function addCatalogItem() {
     destination: dest,
     name,
   });
+  normalizeCatalogOrder();
   state.catalogs.items = items;
   const ok = await saveCatalogs(state.activeProfileId);
   toast(ok ? t('catalog_added') : t('save_err'), ok ? 'ok' : 'err');
@@ -1136,31 +1163,51 @@ async function addCatalogItem() {
 }
 
 async function setCatalogEnabled(idx, enabled) {
-  const items = state.catalogs.items || [];
-  if (!items[idx]) return;
-  items[idx].enabled = enabled;
+  const items = visibleCatalogItems();
+  const item = items[idx];
+  if (!item) return;
+  item.enabled = enabled;
   const ok = await saveCatalogs(state.activeProfileId);
   toast(ok ? t('catalog_saved') : t('save_err'), ok ? 'ok' : 'err');
   if (!ok) await loadData();
 }
 
 async function setCatalogDest(idx, dest) {
-  const items = state.catalogs.items || [];
-  if (!items[idx]) return;
-  items[idx].destination = dest;
+  const items = visibleCatalogItems();
+  const item = items[idx];
+  if (!item) return;
+  item.destination = dest;
+  normalizeCatalogOrder();
   const ok = await saveCatalogs(state.activeProfileId);
   toast(ok ? t('catalog_saved') : t('save_err'), ok ? 'ok' : 'err');
-  if (!ok) await loadData();
+  await loadData();
+  await renderSection();
+}
+
+function visibleCatalogItems() {
+  return (state.catalogs.items || []).filter(i => (i.destination || 'home') === state.catalogTab);
+}
+
+function normalizeCatalogOrder() {
+  // Reorder global items so each destination group keeps contiguous order
+  // (home → movies → series → none), preserving relative order within a group.
+  const items = state.catalogs.items || [];
+  const destOrder = ['home', 'movies', 'series', 'none'];
+  const grouped = destOrder
+    .map(d => items.filter(i => (i.destination || 'home') === d))
+    .flat();
+  grouped.forEach((it, i) => { it.order = i; });
+  state.catalogs.items = grouped;
 }
 
 async function moveCatalog(idx, dir) {
-  const items = state.catalogs.items || [];
+  const items = visibleCatalogItems();
   const target = idx + dir;
   if (target < 0 || target >= items.length) return;
   const tmp = items[idx];
   items[idx] = items[target];
   items[target] = tmp;
-  items.forEach((it, i) => { it.order = i; });
+  normalizeCatalogOrder();
   const ok = await saveCatalogs(state.activeProfileId);
   toast(ok ? t('catalog_saved') : t('save_err'), ok ? 'ok' : 'err');
   await loadData();
@@ -1168,11 +1215,14 @@ async function moveCatalog(idx, dir) {
 }
 
 async function removeCatalogItem(idx) {
-  const items = state.catalogs.items || [];
-  if (!items[idx]) return;
+  const items = visibleCatalogItems();
+  const item = items[idx];
+  if (!item) return;
   if (!confirm(t('catalog_removed'))) return;
-  items.splice(idx, 1);
-  items.forEach((it, i) => { it.order = i; });
+  const allItems = state.catalogs.items || [];
+  const realIdx = allItems.indexOf(item);
+  if (realIdx >= 0) allItems.splice(realIdx, 1);
+  normalizeCatalogOrder();
   const ok = await saveCatalogs(state.activeProfileId);
   toast(ok ? t('catalog_removed') : t('save_err'), ok ? 'ok' : 'err');
   await loadData();
