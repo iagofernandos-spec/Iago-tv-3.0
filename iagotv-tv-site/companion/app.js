@@ -188,9 +188,12 @@ function toast(msg, type = 'ok') {
 
 // ── Auth ──────────────────────────────────────────────────────────────────
 async function signInGoogle() {
+  // Redirect to the site root, which the Supabase project's allowlist accepts.
+  // The landing page then forwards the OAuth callback hash to /companion/.
+  const redirectTo = window.location.origin + '/';
   const { error } = await db.auth.signInWithOAuth({
     provider: 'google',
-    options: { redirectTo: window.location.href },
+    options: { redirectTo },
   });
   if (error) toast(error.message, 'err');
 }

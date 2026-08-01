@@ -19,6 +19,16 @@
 <meta name="twitter:description" content="Live TV, Plex, Emby, Jellyfin, Telegram, addons, watchlists, subtitles, and Trakt sync in one fast, ad-free home built for Android TV.">
 <meta name="twitter:image" content="https://iagotv.app/assets/iagotv-icon-512.png">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"IagoTV","applicationCategory":"MultimediaApplication","operatingSystem":"Android TV, Google TV, Android","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"downloadUrl":"https://play.google.com/store/apps/details?id=com.iagotv.app","codeRepository":"https://github.com/iagotv/iagotv","description":"Live TV, Plex, Emby, Jellyfin, Telegram, addons, watchlists, subtitles, and Trakt sync in one fast, ad-free home built for Android TV."}</script>
+<script>
+  // Forward Supabase OAuth callbacks that land on the root page to the
+  // companion dashboard, which owns session handling.
+  (function () {
+    var h = location.hash || '';
+    if (h && (h.indexOf('access_token=') !== -1 || h.indexOf('code=') !== -1 || h.indexOf('error=') !== -1)) {
+      location.replace('/companion/' + h);
+    }
+  })();
+</script>
 <style>/* cyrillic-ext */
 @font-face {
   font-family: 'Inter';
