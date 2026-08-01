@@ -2,7 +2,9 @@
   "version": 2,
   "routes": [
     { "source": "/report", "destination": "/report/index.html" },
-    { "source": "/report/", "destination": "/report/index.html" }
+    { "source": "/report/", "destination": "/report/index.html" },
+    { "source": "/tv-login", "destination": "/tv-login.html" },
+    { "source": "/tv-login/", "destination": "/tv-login.html" }
   ],
   "headers": [
     {
