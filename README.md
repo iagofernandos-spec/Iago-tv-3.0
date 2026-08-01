@@ -1,58 +1,51 @@
 # IagoTV Dashboard
 
-Dashboard web do IagoTV (rebranding do projeto ARVIO). Contém **2 sites Netlify**
-publicáveis a partir de subpastas deste repositório.
+Dashboard web do IagoTV (rebranding do projeto ARVIO). O **site estático** é
+hospedado no **Vercel** (plano gratuito) — não depende de backend próprio.
 
 ## Estrutura
 
 ```
-├── iagotv-tv-site/   → SITE 1 (estático): landing page + companion + crash report
-└── auth-site/        → SITE 2 (backend): auth IagoTV Cloud + 32 Netlify Functions + DB migrations
+├── iagotv-tv-site/   → SITE PRINCIPAL (estático, hospedado no Vercel)
+│   ├── index.html         → landing page
+│   ├── companion/         → dashboard de gerenciamento (Supabase Google OAuth)
+│   ├── report/            → crash diagnostics
+│   └── vercel.json        → config de rotas/headers do Vercel
+└── auth-site/        → (referência) backend Netlify do ARVIO original — NÃO usado
 ```
 
-## SITE 1 — `iagotv-tv-site` (estático)
+## Deploy no Vercel (grátis)
 
-- **Base directory:** `iagotv-tv-site`
-- **Build:** nenhum (100% estático)
-- **Publish:** `.`
-- Sem variáveis de ambiente obrigatórias.
-- `/companion/` é o dashboard de gerenciamento (Supabase Google OAuth direto).
+1. Crie/entre na conta em https://vercel.com
+2. **Add New → Project → Import Git Repository** → escolha este repositório
+   (ou use **Deploy manually** arrastando a pasta `iagotv-tv-site`)
+3. Framework preset: **Other** · Root Directory: `iagotv-tv-site`
+4. Deploy — não precisa de variáveis de ambiente.
 
-## SITE 2 — `auth-site` (backend)
+Depois de pegar a URL (`https://<seu-projeto>.vercel.app`), no Supabase
+(Authentication → URL Configuration → Redirect URLs) adicione:
+`https://<seu-projeto>.vercel.app/**`
 
-- **Base directory:** `auth-site`
-- **Build:** nenhum (Netlify instala deps do `package.json` e compila
-  `netlify/functions/`)
-- **Publish:** `.`
+Isso é o que permite o login "Continue with Google" do companion funcionar.
 
-### Variáveis de ambiente obrigatórias
+## Por que não migrar o `auth-site`
 
-| Variável | Valor |
-|---|---|
-| `IAGOTV_AUTH_SECRET` | string longa secreta (gerar nova; ver netlify dashboard) |
-| `APP_ANON_KEY` | `sb_publishable__ng1U2_pc7nlAd_6tdCIww_yDQUT65p` |
-| `NETLIFY_DB_URL` | connection string do Postgres (Netlify Database) |
-| `TMDB_API_KEY` | `eae39fb47f1b74ea09c9c10da4eeed4d` |
-| `TRAKT_CLIENT_ID` | `8ec4beaed19283be57516e8128af5c46b7ccb073a07969037532b24c4661590b` |
-| `TRAKT_CLIENT_SECRET` | `92beb9551f02dc84393bcb5854060c41094a8a36bfa6c42e91260a02c90a9c79` |
+O `auth-site` é o backend Netlify do ARVIO original (32 functions usando
+`@netlify/blobs` + Netlify Database). Ele é **dispensável** para o IagoTV:
 
-E-mail (para reset de senha / delete account): configurar **um** de
-`RESEND_API_KEY`, `POSTMARK_SERVER_TOKEN` ou `SENDGRID_API_KEY`.
+- O app Android usa **Supabase nativo** (RPCs `sync_*`, edge function
+  `tv-logins-exchange`) — não usa o auth-site.
+- O companion usa **Supabase direto** (Google OAuth) — não usa o auth-site.
+- TV login usa a **edge function do Supabase** — não o auth-site.
 
-### Banco de dados
-
-Migrations em `auth-site/netlify/database/migrations/` — aplicar as 3 reais
-(`20260618165000_iagotv_cloud_backend`, `20260721110000_catalog_packs`,
-`20260722120000_catalog_pack_submission_guards`). Pular `create_planets` e
-`seed_planets` (exemplo do scaffold).
+Portanto, o dashboard web funciona 100% só com Supabase + Vercel estático.
 
 ## Supabase
 
-- Projeto: `hxsjvjifglzpxtzbtijg` (já tem schema + Google OAuth).
-- **Redirect URLs** (Authentication → URL Configuration): adicionar
-  `https://<site1>.netlify.app/**` para o login Google do companion.
+- Projeto: `hxsjvjifglzpxtzbtijg` (já tem schema + Google OAuth habilitado).
+- O companion (`iagotv-tv-site/companion/app.js`) já aponta para este projeto.
 
 ## Importante
 
-- Não commitar segredos; o `IAGOTV_AUTH_SECRET` vai apenas nas env vars.
-- O app Android IagoTV usa Supabase nativo e não depende destes sites.
+- Não commitar segredos.
+- O app Android IagoTV usa Supabase nativo e não depende deste site.

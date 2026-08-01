@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "routes": [
+    { "source": "/report", "destination": "/report/index.html" },
+    { "source": "/report/", "destination": "/report/index.html" }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow" }
+      ]
+    }
+  ]
+}
