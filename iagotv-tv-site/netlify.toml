@@ -1,0 +1,10 @@
+[build]
+  publish = "."
+
+# The /app redirect previously pointed at the hosted web app. With the web app
+# deployed separately (web.iagotv.app or any Netlify/Vercel URL), add a redirect
+# here, e.g.:
+#   from = "/app"
+#   to = "https://web.iagotv.app"
+#   status = 302
+#   force = true

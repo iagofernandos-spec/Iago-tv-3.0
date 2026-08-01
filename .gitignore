@@ -1,0 +1,21 @@
+# Node / deps
+node_modules/
+npm-debug.log*
+yarn-error.log*
+
+# Env & secrets
+.env
+.env.local
+.env.*.local
+
+# Netlify local state
+.netlify/
+
+# Deploy bundles & guides (not for the repo)
+deploy-bundles/
+ENVIAR-PARA-IA-NETLIFY.md
+DEPLOY.md
+
+# OS / editor
+.DS_Store
+Thumbs.db
