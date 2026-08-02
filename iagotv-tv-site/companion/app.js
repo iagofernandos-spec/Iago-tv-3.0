@@ -37,6 +37,9 @@ const STRINGS = {
     profile_created: 'Perfil criado ✓',
     profile_deleted: 'Perfil excluído ✓',
     profile_saved: 'Perfil salvo ✓',
+    profile_photo_label: 'Foto do perfil (URL)',
+    profile_photo_hint: 'Cole uma URL de imagem (opcional). Vazio mantém a inicial com cor.',
+    profile_photo_clear: 'Remover foto',
     profile_name_required: 'Digite um nome',
     profile_delete_confirm: 'Excluir este perfil e todos os seus dados?',
     profile_delete_disabled: 'Não é possível excluir o perfil principal',
@@ -80,6 +83,69 @@ const STRINGS = {
     catalog_manifest_err: 'Não foi possível carregar os catálogos deste add-on',
     catalog_choose_addon: 'Escolha um add-on primeiro',
     move_up: 'Subir', move_down: 'Descer',
+    // collections
+    nav_collections: 'Coleções',
+    collections_title: 'Coleções',
+    collections_sub: (n) => `${n} coleç${n !== 1 ? 'ões' : 'ão'} no perfil`,
+    collections_empty: 'Nenhuma coleção criada — crie a sua primeira coleção',
+    collections_tip: '💡 Coleções agrupam listas (fontes de add-ons, TMDB ou Trakt) em abas na Home da TV.',
+    add_collection: 'Nova coleção',
+    col_title_label: 'Título da coleção',
+    col_pin_top: 'Fixar no topo da Home',
+    col_view_mode: 'Modo de exibição',
+    col_view_tabbed: 'Abas',
+    col_view_tabs_only: 'Somente abas',
+    col_view_tiles: 'Grade',
+    col_view_carousel: 'Carrossel',
+    col_created: 'Coleção criada ✓',
+    col_updated: 'Coleção salva ✓',
+    col_deleted: 'Coleção excluída ✓',
+    col_save: 'Salvar coleção',
+    col_edit: 'Editar',
+    col_remove: 'Excluir coleção',
+    col_delete_confirm: 'Excluir esta coleção?',
+    col_name_required: 'Digite um título',
+    col_no_folders: 'Sem abas ainda — adicione abas e fontes',
+    col_folders_label: 'Abas da coleção',
+    col_add_folder: 'Adicionar aba',
+    col_folder_title: 'Título da aba',
+    col_folder_shape: 'Formato do bloco',
+    col_folder_emoji: 'Emoji da capa (opcional)',
+    col_folder_sources: 'Fontes da aba',
+    col_add_source: 'Adicionar fonte',
+    col_source_kind: 'Tipo de fonte',
+    col_source_kind_addon: 'Add-on',
+    col_source_kind_tmdb: 'TMDB',
+    col_source_kind_trakt: 'Trakt',
+    col_source_addon: 'Add-on',
+    col_source_catalog: 'Lista do add-on',
+    col_source_tmdb_type: 'Tipo TMDB',
+    col_source_tmdb_list: 'Lista',
+    col_source_tmdb_collection: 'Coleção',
+    col_source_tmdb_company: 'Produtora',
+    col_source_tmdb_network: 'Canal',
+    col_source_tmdb_discover: 'Descobrir',
+    col_source_tmdb_person: 'Pessoa',
+    col_source_tmdb_id: 'ID TMDB',
+    col_source_media_type: 'Tipo de mídia',
+    col_source_media_movie: 'Filmes',
+    col_source_media_tv: 'Séries',
+    col_source_title: 'Título',
+    col_source_trakt_id: 'ID da lista Trakt',
+    col_source_sort: 'Ordenação',
+    col_source_sort_popular: 'Populares',
+    col_source_sort_rank: 'Ranking',
+    col_source_sort_original: 'Original',
+    col_source_sort_recent: 'Recentes',
+    col_source_sort_asc: 'Crescente',
+    col_source_sort_desc: 'Decrescente',
+    col_source_remove: 'Remover fonte',
+    col_folder_remove: 'Remover aba',
+    col_error: 'Falha ao salvar coleção',
+    col_add_to_home: 'Adicionar à Home',
+    col_in_home: 'Na Home',
+    col_add_collection_to_catalog: 'Adicionar coleção como lista',
+    col_no_collections: 'Nenhuma coleção criada ainda',
     // iptv
     iptv_title: 'IPTV',
     iptv_sub: (n) => `${n} fonte${n !== 1 ? 's' : ''}`,
@@ -148,6 +214,9 @@ const STRINGS = {
     profile_created: 'Profile created ✓',
     profile_deleted: 'Profile deleted ✓',
     profile_saved: 'Profile saved ✓',
+    profile_photo_label: 'Profile photo (URL)',
+    profile_photo_hint: 'Paste an image URL (optional). Empty keeps the initial with color.',
+    profile_photo_clear: 'Remove photo',
     profile_name_required: 'Enter a name',
     profile_delete_confirm: 'Delete this profile and all its data?',
     profile_delete_disabled: 'The primary profile cannot be deleted',
@@ -189,6 +258,69 @@ const STRINGS = {
     catalog_manifest_err: 'Could not load this add-on catalogs',
     catalog_choose_addon: 'Choose an add-on first',
     move_up: 'Move up', move_down: 'Move down',
+    // collections
+    nav_collections: 'Collections',
+    collections_title: 'Collections',
+    collections_sub: (n) => `${n} collection${n !== 1 ? 's' : ''} on profile`,
+    collections_empty: 'No collections yet — create your first collection',
+    collections_tip: '💡 Collections group lists (add-on, TMDB or Trakt sources) into tabs on your TV Home.',
+    add_collection: 'New collection',
+    col_title_label: 'Collection title',
+    col_pin_top: 'Pin to top of Home',
+    col_view_mode: 'View mode',
+    col_view_tabbed: 'Tabs',
+    col_view_tabs_only: 'Tabs only',
+    col_view_tiles: 'Grid',
+    col_view_carousel: 'Carousel',
+    col_created: 'Collection created ✓',
+    col_updated: 'Collection saved ✓',
+    col_deleted: 'Collection deleted ✓',
+    col_save: 'Save collection',
+    col_edit: 'Edit',
+    col_remove: 'Delete collection',
+    col_delete_confirm: 'Delete this collection?',
+    col_name_required: 'Enter a title',
+    col_no_folders: 'No tabs yet — add tabs and sources',
+    col_folders_label: 'Collection tabs',
+    col_add_folder: 'Add tab',
+    col_folder_title: 'Tab title',
+    col_folder_shape: 'Tile shape',
+    col_folder_emoji: 'Cover emoji (optional)',
+    col_folder_sources: 'Tab sources',
+    col_add_source: 'Add source',
+    col_source_kind: 'Source type',
+    col_source_kind_addon: 'Add-on',
+    col_source_kind_tmdb: 'TMDB',
+    col_source_kind_trakt: 'Trakt',
+    col_source_addon: 'Add-on',
+    col_source_catalog: 'Add-on list',
+    col_source_tmdb_type: 'TMDB type',
+    col_source_tmdb_list: 'List',
+    col_source_tmdb_collection: 'Collection',
+    col_source_tmdb_company: 'Company',
+    col_source_tmdb_network: 'Network',
+    col_source_tmdb_discover: 'Discover',
+    col_source_tmdb_person: 'Person',
+    col_source_tmdb_id: 'TMDB ID',
+    col_source_media_type: 'Media type',
+    col_source_media_movie: 'Movies',
+    col_source_media_tv: 'TV Shows',
+    col_source_title: 'Title',
+    col_source_trakt_id: 'Trakt list ID',
+    col_source_sort: 'Sort',
+    col_source_sort_popular: 'Popular',
+    col_source_sort_rank: 'Ranking',
+    col_source_sort_original: 'Original',
+    col_source_sort_recent: 'Recent',
+    col_source_sort_asc: 'Ascending',
+    col_source_sort_desc: 'Descending',
+    col_source_remove: 'Remove source',
+    col_folder_remove: 'Remove tab',
+    col_error: 'Failed to save collection',
+    col_add_to_home: 'Add to Home',
+    col_in_home: 'On Home',
+    col_add_collection_to_catalog: 'Add collection as list',
+    col_no_collections: 'No collections created yet',
     iptv_title: 'IPTV',
     iptv_sub: (n) => `${n} source${n !== 1 ? 's' : ''}`,
     iptv_empty: 'No IPTV sources configured',
@@ -252,6 +384,9 @@ const STRINGS = {
     profile_created: 'פרופיל נוצר ✓',
     profile_deleted: 'פרופיל נמחק ✓',
     profile_saved: 'פרופיל נשמר ✓',
+    profile_photo_label: 'תמונת פרופיל (כתובת)',
+    profile_photo_hint: 'הדבק כתובת תמונה (אופציונלי). ריק ישאיר את האות הראשונה עם צבע.',
+    profile_photo_clear: 'הסר תמונה',
     profile_name_required: 'הזן שם',
     profile_delete_confirm: 'למחוק פרופיל זה וכל הנתונים שלו?',
     profile_delete_disabled: 'לא ניתן למחוק את הפרופיל הראשי',
@@ -293,6 +428,69 @@ const STRINGS = {
     catalog_manifest_err: 'לא ניתן לטעון את הקטלוגים של הרחבה זו',
     catalog_choose_addon: 'בחר הרחבה קודם',
     move_up: 'העלה', move_down: 'הורד',
+    // collections
+    nav_collections: 'אוספים',
+    collections_title: 'אוספים',
+    collections_sub: (n) => `${n} אוספים בפרופיל`,
+    collections_empty: 'אין אוספים עדיין — צור את האוסף הראשון שלך',
+    collections_tip: '💡 אוספים מקבצים רשימות (מקורות הרחבות, TMDB או Trakt) לכרטיסיות בבית בטלוויזיה.',
+    add_collection: 'אוסף חדש',
+    col_title_label: 'כותרת האוסף',
+    col_pin_top: 'נעוץ לראש הבית',
+    col_view_mode: 'מצב תצוגה',
+    col_view_tabbed: 'כרטיסיות',
+    col_view_tabs_only: 'כרטיסיות בלבד',
+    col_view_tiles: 'רשת',
+    col_view_carousel: 'קרוסלה',
+    col_created: 'האוסף נוצר ✓',
+    col_updated: 'האוסף נשמר ✓',
+    col_deleted: 'האוסף נמחק ✓',
+    col_save: 'שמור אוסף',
+    col_edit: 'ערוך',
+    col_remove: 'מחק אוסף',
+    col_delete_confirm: 'למחוק אוסף זה?',
+    col_name_required: 'הזן כותרת',
+    col_no_folders: 'אין כרטיסיות עדיין — הוסף כרטיסיות ומקורות',
+    col_folders_label: 'כרטיסיות האוסף',
+    col_add_folder: 'הוסף כרטיסייה',
+    col_folder_title: 'כותרת הכרטיסייה',
+    col_folder_shape: 'צורת אריח',
+    col_folder_emoji: 'אימוג׳י לעטיפה (אופציונלי)',
+    col_folder_sources: 'מקורות הכרטיסייה',
+    col_add_source: 'הוסף מקור',
+    col_source_kind: 'סוג מקור',
+    col_source_kind_addon: 'הרחבה',
+    col_source_kind_tmdb: 'TMDB',
+    col_source_kind_trakt: 'Trakt',
+    col_source_addon: 'הרחבה',
+    col_source_catalog: 'רשימת ההרחבה',
+    col_source_tmdb_type: 'סוג TMDB',
+    col_source_tmdb_list: 'רשימה',
+    col_source_tmdb_collection: 'אוסף',
+    col_source_tmdb_company: 'חברה',
+    col_source_tmdb_network: 'רשת',
+    col_source_tmdb_discover: 'גלה',
+    col_source_tmdb_person: 'אדם',
+    col_source_tmdb_id: 'מזהה TMDB',
+    col_source_media_type: 'סוג מדיה',
+    col_source_media_movie: 'סרטים',
+    col_source_media_tv: 'סדרות',
+    col_source_title: 'כותרת',
+    col_source_trakt_id: 'מזהה רשימת Trakt',
+    col_source_sort: 'מיון',
+    col_source_sort_popular: 'פופולרי',
+    col_source_sort_rank: 'דירוג',
+    col_source_sort_original: 'מקורי',
+    col_source_sort_recent: 'אחרון',
+    col_source_sort_asc: 'עולה',
+    col_source_sort_desc: 'יורד',
+    col_source_remove: 'הסר מקור',
+    col_folder_remove: 'הסר כרטיסייה',
+    col_error: 'שגיאה בשמירת האוסף',
+    col_add_to_home: 'הוסף לבית',
+    col_in_home: 'בבית',
+    col_add_collection_to_catalog: 'הוסף אוסף כרשימה',
+    col_no_collections: 'עדיין לא נוצרו אוספים',
     iptv_title: 'IPTV',
     iptv_sub: (n) => `${n} מקורות`,
     iptv_empty: 'אין מקורות IPTV מוגדרים',
@@ -385,6 +583,7 @@ let state = {
   library: [],
   settings: {},
   catalogs: { hide_unreleased_content: false, items: [] },
+  collections: [],
   catalogAddons: [], // addons with their manifest catalogs loaded
   activeSection: 'dashboard',
   historyTab: 'movies',
@@ -419,7 +618,7 @@ async function signOut() {
 // ── Cloud Data Loading (IagoTV schema, per profile) ──────────────────────
 async function loadData() {
   const pid = state.activeProfileId;
-  const [profiles, addons, iptv, watched, library, settings, catalogs] = await Promise.all([
+  const [profiles, addons, iptv, watched, library, settings, catalogs, collections] = await Promise.all([
     loadProfiles(),
     loadAddons(pid),
     loadIptv(pid),
@@ -427,6 +626,7 @@ async function loadData() {
     loadLibrary(pid),
     loadSettingsBlob(pid),
     loadCatalogs(pid),
+    loadCollections(pid),
   ]);
   state.profiles = profiles;
   state.addons = addons;
@@ -435,6 +635,7 @@ async function loadData() {
   state.library = library;
   state.settings = settings;
   state.catalogs = catalogs;
+  state.collections = collections;
   state.catalogAddons = [];
   if (addons.length) {
     loadCatalogAddons(addons, pid);
@@ -449,6 +650,8 @@ async function loadProfiles() {
       id: p.profile_index,
       name: p.name || `Profile ${p.profile_index}`,
       avatarColorHex: p.avatar_color_hex || '#8B5CF6',
+      avatarUrl: p.avatar_url || '',
+      avatarId: p.avatar_id || '',
       pinEnabled: p.pin_enabled === true,
       usesPrimaryAddons: p.uses_primary_addons === true,
     }));
@@ -584,12 +787,48 @@ async function saveCatalogs(profileId) {
   }
 }
 
+async function loadCollections(profileId) {
+  try {
+    const { data, error } = await db.rpc('sync_pull_collections', {
+      p_profile_id: profileId,
+    });
+    if (error) throw error;
+    const row = (data ?? [])[0];
+    const list = row?.collections_json;
+    if (Array.isArray(list)) return list;
+    return [];
+  } catch (e) {
+    console.error('loadCollections', e);
+    return [];
+  }
+}
+
+async function saveCollections(profileId) {
+  try {
+    const { error } = await db.rpc('sync_push_collections', {
+      p_profile_id: profileId,
+      p_collections_json: state.collections,
+      p_origin_client_id: 'iagotv-companion',
+    });
+    if (error) throw error;
+    return true;
+  } catch (e) {
+    console.error('saveCollections', e);
+    return false;
+  }
+}
+
+function genId() {
+  return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+}
+
 // ── Sections ──────────────────────────────────────────────────────────────
 const sections = {
   dashboard: renderDashboard,
   profiles: renderProfiles,
   addons: renderAddons,
   catalogs: renderCatalogs,
+  collections: renderCollections,
   iptv: renderIPTV,
   history: renderHistory,
   watchlist: renderWatchlist,
@@ -662,6 +901,9 @@ async function renderDashboard() {
 function renderProfileAvatar(profile, size = 'big') {
   const color = /^#[0-9a-fA-F]{6}$/.test(profile.avatarColorHex || '') ? profile.avatarColorHex : '#8B5CF6';
   const letter = escapeHtml((profile.name || '?')[0].toUpperCase());
+  if (profile.avatarUrl && /^https?:\/\//i.test(profile.avatarUrl)) {
+    return `<div class="profile-avatar-${size}" style="background:${color}22;color:${color};overflow:hidden"><img src="${safeUrl(profile.avatarUrl)}" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:50%" onerror="this.parentNode.innerHTML='${letter}'"></div>`;
+  }
   return `<div class="profile-avatar-${size}" style="background:${color}22;color:${color}">${letter}</div>`;
 }
 
@@ -711,9 +953,22 @@ async function editProfile(profileId) {
   editor.innerHTML = `
     <div class="card" id="editor-card-${profile.id}">
       <div style="font-size:16px;font-weight:700;margin-bottom:16px">${escapeHtml(profile.name)} — ${t('profile_save')}</div>
+      <div style="display:flex;gap:16px;align-items:center;margin-bottom:16px">
+        ${renderProfileAvatar(profile)}
+        <div style="flex:1">
+          <div class="form-group" style="margin-bottom:0">
+            <label class="form-label">${t('profile_name_label')}</label>
+            <input class="form-input" id="pf-name-${profile.id}" value="${escapeHtml(profile.name)}">
+          </div>
+        </div>
+      </div>
       <div class="form-group">
-        <label class="form-label">${t('profile_name_label')}</label>
-        <input class="form-input" id="pf-name-${profile.id}" value="${escapeHtml(profile.name)}">
+        <label class="form-label">${t('profile_photo_label')}</label>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <input class="form-input" id="pf-photo-${profile.id}" value="${escapeHtml(profile.avatarUrl || '')}" placeholder="https://example.com/foto.jpg" style="flex:1;min-width:200px">
+          <button type="button" class="btn btn-ghost" onclick="clearProfilePhoto(${profile.id})">${t('profile_photo_clear')}</button>
+        </div>
+        <div class="form-hint">${t('profile_photo_hint')}</div>
       </div>
       <div class="form-group">
         <label class="form-label">${t('profile_color_label')}</label>
@@ -762,6 +1017,11 @@ function pickProfileColor(profileId, color, btn) {
   if (hidden) hidden.value = color;
 }
 
+function clearProfilePhoto(profileId) {
+  const input = document.getElementById('pf-photo-' + profileId);
+  if (input) input.value = '';
+}
+
 async function createProfile() {
   if (state.profiles.length >= 5) { toast(t('profile_max'), 'err'); return; }
   const used = new Set(state.profiles.map(p => p.id));
@@ -804,6 +1064,7 @@ async function saveProfile(profileId) {
   const selectedSwatch = document.querySelector(`#editor-card-${profileId} .color-swatch.selected`);
   if (selectedSwatch) color = selectedSwatch.dataset.color;
   const usesPrimary = profileId !== 1 && document.getElementById('pf-primary-' + profileId)?.checked === true;
+  const avatarUrl = (document.getElementById('pf-photo-' + profileId)?.value || '').trim();
 
   try {
     const p = {
@@ -813,6 +1074,12 @@ async function saveProfile(profileId) {
       uses_primary_addons: usesPrimary,
       uses_primary_plugins: false,
     };
+    if (avatarUrl && /^https?:\/\//i.test(avatarUrl)) {
+      p.avatar_url = avatarUrl;
+      p.avatar_id = null;
+    } else {
+      p.avatar_url = null;
+    }
     const { error } = await db.rpc('sync_push_profiles', {
       p_profiles: [p],
       p_client_max_profiles: 5,
@@ -983,11 +1250,17 @@ async function removeAddon(id) {
 
 // ── Catalogs (Home / Movies / Series) ────────────────────────────────────
 function catalogItemDisplayName(item) {
+  if (item.is_collection) return item.custom_title || item.name || t('nav_collections');
   if (item.custom_title && item.custom_title.trim()) return item.custom_title;
   return item.name || `${item.addon_id} · ${item.catalog_id}`;
 }
 
 function catalogItemSub(item) {
+  if (item.is_collection) {
+    const collection = state.collections.find(c => c.id === item.collection_id);
+    const folderCount = collection?.folders?.length || 0;
+    return `${t('nav_collections')} · ${folderCount} aba${folderCount !== 1 ? 's' : ''}`;
+  }
   const addon = state.catalogAddons.find(a => a.addonId === item.addon_id || a.id === item.addon_id);
   const addonName = addon?.name || item.addon_id || '';
   const type = item.type || '';
@@ -1043,6 +1316,17 @@ async function renderCatalogs() {
 
     <div class="card">
       <div style="font-size:16px;font-weight:700;margin-bottom:12px">${t('catalog_add_title')} → ${t('dest_' + state.catalogTab)}</div>
+      ${state.collections.length ? `
+      <div class="form-group" style="margin-bottom:12px">
+        <label class="form-label">${t('col_add_collection_to_catalog')}</label>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <select class="form-select" id="catalog-collection" style="flex:1;min-width:180px">
+            ${state.collections.map(c => `<option value="${escapeAttr(c.id)}">${escapeHtml(c.title)}</option>`).join('')}
+          </select>
+          <button class="btn btn-primary" onclick="addCollectionAsCatalog()">${t('catalog_add')}</button>
+        </div>
+      </div>
+      <div style="font-size:12px;color:var(--text-muted);margin-bottom:14px">— ${t('catalogs_tip')} —</div>` : ''}
       <div class="form-group" style="margin-bottom:12px">
         <label class="form-label">${t('catalog_addon_label')}</label>
         <select class="form-select" id="catalog-addon" onchange="onCatalogAddonChange()">
@@ -1162,6 +1446,36 @@ async function addCatalogItem() {
   await renderSection();
 }
 
+async function addCollectionAsCatalog() {
+  const select = document.getElementById('catalog-collection');
+  const collectionId = select?.value;
+  if (!collectionId) { toast(t('col_no_collections'), 'err'); return; }
+  const collection = state.collections.find(c => c.id === collectionId);
+  if (!collection) return;
+  const dest = state.catalogTab || 'home';
+  const items = state.catalogs.items || [];
+  const existing = items.find(i => i.is_collection && i.collection_id === collectionId);
+  if (existing) { toast(t('catalog_added')); return; }
+  items.push({
+    addon_id: '',
+    type: '',
+    catalog_id: '',
+    enabled: true,
+    order: items.length,
+    custom_title: collection.title || '',
+    is_collection: true,
+    collection_id: collection.id,
+    destination: dest,
+    name: collection.title || t('nav_collections'),
+  });
+  normalizeCatalogOrder();
+  state.catalogs.items = items;
+  const ok = await saveCatalogs(state.activeProfileId);
+  toast(ok ? t('catalog_added') : t('save_err'), ok ? 'ok' : 'err');
+  await loadData();
+  await renderSection();
+}
+
 async function setCatalogEnabled(idx, enabled) {
   const items = visibleCatalogItems();
   const item = items[idx];
@@ -1225,6 +1539,529 @@ async function removeCatalogItem(idx) {
   normalizeCatalogOrder();
   const ok = await saveCatalogs(state.activeProfileId);
   toast(ok ? t('catalog_removed') : t('save_err'), ok ? 'ok' : 'err');
+  await loadData();
+  await renderSection();
+}
+
+// ── Collections (editable) ────────────────────────────────────────────────
+const COL_VIEW_MODES = [
+  { value: 'TABBED_GRID', label: null, key: 'col_view_tabbed' },
+  { value: 'ROWS', label: null, key: 'col_view_tabs_only' },
+  { value: 'FOLLOW_LAYOUT', label: null, key: 'col_view_tiles' },
+];
+const COL_TILE_SHAPES = ['SQUARE', 'POSTER', 'LANDSCAPE'];
+const COL_TMDB_TYPES = [
+  { value: 'LIST', key: 'col_source_tmdb_list' },
+  { value: 'COLLECTION', key: 'col_source_tmdb_collection' },
+  { value: 'COMPANY', key: 'col_source_tmdb_company' },
+  { value: 'NETWORK', key: 'col_source_tmdb_network' },
+  { value: 'DISCOVER', key: 'col_source_tmdb_discover' },
+  { value: 'PERSON', key: 'col_source_tmdb_person' },
+  { value: 'DIRECTOR', key: 'col_source_tmdb_director' },
+];
+const COL_TMDB_SORTS = [
+  { value: 'popularity.desc', key: 'col_source_sort_popular' },
+  { value: 'vote_average.desc', key: 'col_source_sort_rank' },
+  { value: 'vote_count.desc', key: 'col_source_sort_popular' },
+  { value: 'primary_release_date.desc', key: 'col_source_sort_recent' },
+  { value: 'first_air_date.desc', key: 'col_source_sort_recent' },
+];
+const COL_TRAKT_SORTS = [
+  { value: 'rank', key: 'col_source_sort_rank' },
+  { value: 'popularity', key: 'col_source_sort_popular' },
+  { value: 'released', key: 'col_source_sort_recent' },
+  { value: 'title', key: 'col_source_title' },
+];
+const COL_MEDIA_TYPES = [
+  { value: 'MOVIE', key: 'col_source_media_movie' },
+  { value: 'TV', key: 'col_source_media_tv' },
+];
+
+function colViewModeLabel(value) {
+  const item = COL_VIEW_MODES.find(m => m.value === value);
+  return item ? t(item.key) : value;
+}
+
+function sourceKindLabel(provider) {
+  if (provider === 'addon') return t('col_source_kind_addon');
+  if (provider === 'tmdb') return t('col_source_kind_tmdb');
+  if (provider === 'trakt') return t('col_source_kind_trakt');
+  return provider;
+}
+
+function sourceSummary(src) {
+  if (!src) return '';
+  if (src.provider === 'addon') {
+    const addon = state.catalogAddons.find(a => a.addonId === src.addonId || a.id === src.addonId);
+    return `${addon?.name || src.addonId} · ${src.catalogId}${src.type ? ' (' + src.type + ')' : ''}`;
+  }
+  if (src.provider === 'tmdb') {
+    return `TMDB · ${src.title || src.tmdbSourceType}${src.tmdbId ? ' #' + src.tmdbId : ''}`;
+  }
+  if (src.provider === 'trakt') {
+    return `Trakt · ${src.title || src.traktListId}${src.mediaType ? ' · ' + src.mediaType : ''}`;
+  }
+  return '';
+}
+
+async function renderCollections() {
+  const main = document.getElementById('main-content');
+  const collections = state.collections;
+  const catalogs = state.catalogs.items || [];
+
+  main.innerHTML = `
+    <div class="section-header">
+      <div><div class="section-title">${t('collections_title')}</div><div class="section-sub">${t('collections_sub', collections.length)}</div></div>
+    </div>
+
+    ${collections.length === 0 ? emptyState(t('collections_empty')) : `
+    <div class="card" style="padding:0 20px">
+      ${collections.map(c => {
+        const folderCount = c.folders?.length || 0;
+        const inHome = catalogs.some(i => i.is_collection && i.collection_id === c.id);
+        return `
+        <div class="list-item" style="flex-wrap:wrap">
+          <div class="item-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 7h10M7 12h10M7 17h6"/></svg>
+          </div>
+          <div class="item-info">
+            <div class="item-title">${escapeHtml(c.title)}</div>
+            <div class="item-sub">${folderCount} aba${folderCount !== 1 ? 's' : ''} · ${colViewModeLabel(c.viewMode)} ${c.pinToTop ? '· 📌 ' + t('col_pin_top') : ''}</div>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+            ${inHome ? `<span class="badge badge-gold">${t('col_in_home')}</span>` : ''}
+            <button class="btn btn-ghost" style="padding:6px 12px" onclick="openCollectionEditor('${escapeAttr(c.id)}')">✏️ ${t('col_edit')}</button>
+            <button class="btn btn-primary" style="padding:6px 12px" onclick="toggleCollectionOnHome('${escapeAttr(c.id)}')">${inHome ? '−' : '+'} ${t('col_add_to_home')}</button>
+            <button class="btn btn-danger" style="padding:6px 10px" onclick="deleteCollection('${escapeAttr(c.id)}')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/></svg>
+            </button>
+          </div>
+        </div>`;
+      }).join('')}
+    </div>`}
+
+    <button class="btn btn-primary" style="margin-top:16px;justify-content:center;width:100%" onclick="createCollection()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M12 5v14M5 12h14"/></svg>
+      ${t('add_collection')}
+    </button>
+
+    <div id="collection-editor"></div>
+
+    <div class="card" style="margin-top:16px"><div style="font-size:13px;color:var(--text-muted)">${t('collections_tip')}</div></div>
+  `;
+}
+
+async function createCollection() {
+  const collection = {
+    id: genId(),
+    title: '',
+    backdropImageUrl: null,
+    pinToTop: false,
+    focusGlowEnabled: true,
+    viewMode: 'TABBED_GRID',
+    showAllTab: true,
+    folders: [],
+  };
+  state.collections.push(collection);
+  await renderCollections();
+  openCollectionEditor(collection.id);
+}
+
+function openCollectionEditor(collectionId) {
+  const collection = state.collections.find(c => c.id === collectionId);
+  if (!collection) return;
+  const editor = document.getElementById('collection-editor');
+  if (!editor) return;
+  editor.innerHTML = `
+    <div class="card" id="col-editor-${escapeAttr(collection.id)}">
+      <div style="font-size:16px;font-weight:700;margin-bottom:16px">${escapeHtml(collection.title) || t('col_edit')}</div>
+
+      <div class="form-group">
+        <label class="form-label">${t('col_title_label')}</label>
+        <input class="form-input" id="col-title-${escapeAttr(collection.id)}" value="${escapeHtml(collection.title)}">
+      </div>
+
+      <div class="form-group">
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <div>
+            <div style="font-weight:600">${t('col_pin_top')}</div>
+            <div style="font-size:12px;color:var(--text-muted);margin-top:2px">${t('col_in_home')}</div>
+          </div>
+          <label class="toggle">
+            <input type="checkbox" id="col-pin-${escapeAttr(collection.id)}" ${collection.pinToTop ? 'checked' : ''}>
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">${t('col_view_mode')}</label>
+        <select class="form-select" id="col-mode-${escapeAttr(collection.id)}">
+          ${COL_VIEW_MODES.map(m => `<option value="${m.value}" ${collection.viewMode === m.value ? 'selected' : ''}>${t(m.key)}</option>`).join('')}
+        </select>
+      </div>
+
+      <div style="font-size:13px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;margin:18px 0 12px">${t('col_folders_label')}</div>
+      <div id="col-folders-${escapeAttr(collection.id)}">
+        ${(collection.folders || []).map((folder, fi) => renderFolderEditor(collection.id, folder, fi)).join('')}
+      </div>
+      <button class="btn btn-ghost" onclick="addFolderToCollection('${escapeAttr(collection.id)}')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M12 5v14M5 12h14"/></svg>
+        ${t('col_add_folder')}
+      </button>
+
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:20px">
+        <button class="btn btn-primary" onclick="saveCollectionEditor('${escapeAttr(collection.id)}')">${t('col_save')}</button>
+      </div>
+    </div>
+  `;
+  editor.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function renderFolderEditor(collectionId, folder, fi) {
+  const sources = folder.sources || [];
+  return `
+    <div class="folder-editor" data-folder-id="${escapeAttr(folder.id)}">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+        <div style="font-weight:600;font-size:14px">${escapeHtml(folder.title) || 'Aba ' + (fi + 1)}</div>
+        <button class="btn btn-danger" style="padding:4px 10px;font-size:11px" onclick="removeFolderFromCollection('${escapeAttr(collectionId)}','${escapeAttr(folder.id)}')">${t('col_folder_remove')}</button>
+      </div>
+      <div class="form-group" style="margin-bottom:10px">
+        <label class="form-label">${t('col_folder_title')}</label>
+        <input class="form-input" data-field="folder-title" value="${escapeHtml(folder.title)}">
+      </div>
+      <div class="form-group" style="margin-bottom:10px">
+        <label class="form-label">${t('col_folder_shape')}</label>
+        <select class="form-select" data-field="folder-shape">
+          ${COL_TILE_SHAPES.map(s => `<option value="${s}" ${folder.tileShape === s ? 'selected' : ''}>${s}</option>`).join('')}
+        </select>
+      </div>
+      <div class="form-group" style="margin-bottom:10px">
+        <label class="form-label">${t('col_folder_emoji')}</label>
+        <input class="form-input" data-field="folder-emoji" value="${escapeHtml(folder.coverEmoji || '')}" placeholder="🎬">
+      </div>
+
+      <div style="font-size:12px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.4px;margin:12px 0 8px">${t('col_folder_sources')} (${sources.length})</div>
+      <div data-sources-list>
+        ${sources.map((src, si) => renderSourceEditor(collectionId, folder.id, src, si)).join('')}
+      </div>
+      <div style="display:flex;gap:8px;margin:10px 0 16px;flex-wrap:wrap">
+        <button class="btn btn-ghost" style="padding:5px 12px;font-size:12px" onclick="addSourceToFolder('${escapeAttr(collectionId)}','${escapeAttr(folder.id)}','addon')">+ ${t('col_source_kind_addon')}</button>
+        <button class="btn btn-ghost" style="padding:5px 12px;font-size:12px" onclick="addSourceToFolder('${escapeAttr(collectionId)}','${escapeAttr(folder.id)}','tmdb')">+ TMDB</button>
+        <button class="btn btn-ghost" style="padding:5px 12px;font-size:12px" onclick="addSourceToFolder('${escapeAttr(collectionId)}','${escapeAttr(folder.id)}','trakt')">+ Trakt</button>
+      </div>
+    </div>
+  `;
+}
+
+function renderSourceEditor(collectionId, folderId, src, si) {
+  if (src.provider === 'addon') {
+    const addonOptions = state.catalogAddons.length
+      ? state.catalogAddons.map(a => `<option value="${escapeAttr(a.addonId)}" ${src.addonId === a.addonId ? 'selected' : ''}>${escapeHtml(a.name || a.url)}</option>`).join('')
+      : `<option value="">—</option>`;
+    const catalogs = state.catalogAddons.find(a => a.addonId === src.addonId || a.id === src.addonId)?.manifests || [];
+    const catalogOptions = catalogs.map(c => `<option value="${escapeAttr(c.id)}" ${src.catalogId === c.id ? 'selected' : ''}>${escapeHtml(c.name || c.id)} (${escapeHtml(c.type)})</option>`).join('');
+    return `
+      <div class="source-editor" style="border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:10px;background:var(--bg-card2)">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+          <span class="badge badge-blue">${t('col_source_kind_addon')}</span>
+          <button class="btn btn-danger" style="padding:4px 8px;font-size:11px" onclick="removeSourceFromFolder('${escapeAttr(collectionId)}','${escapeAttr(folderId)}','${escapeAttr(src.id)}')">${t('col_source_remove')}</button>
+        </div>
+        <div class="form-group" style="margin-bottom:8px">
+          <label class="form-label">${t('col_source_addon')}</label>
+          <select class="form-select" data-field="src-addon" onchange="onSrcAddonChange('${escapeAttr(collectionId)}','${escapeAttr(folderId)}','${escapeAttr(src.id)}',this.value)">
+            ${addonOptions}
+          </select>
+        </div>
+        <div class="form-group" style="margin-bottom:8px">
+          <label class="form-label">${t('col_source_catalog')}</label>
+          <select class="form-select" data-field="src-catalog">
+            ${catalogOptions || `<option value="">${t('catalog_manifest_err')}</option>`}
+          </select>
+        </div>
+        <input type="hidden" data-field="src-provider" value="addon">
+        <input type="hidden" data-field="src-type" value="${escapeHtml(src.type || '')}">
+      </div>
+    `;
+  }
+  if (src.provider === 'tmdb') {
+    return `
+      <div class="source-editor" style="border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:10px;background:var(--bg-card2)">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+          <span class="badge badge-gold">TMDB</span>
+          <button class="btn btn-danger" style="padding:4px 8px;font-size:11px" onclick="removeSourceFromFolder('${escapeAttr(collectionId)}','${escapeAttr(folderId)}','${escapeAttr(src.id)}')">${t('col_source_remove')}</button>
+        </div>
+        <div class="form-group" style="margin-bottom:8px">
+          <label class="form-label">${t('col_source_title')}</label>
+          <input class="form-input" data-field="src-title" value="${escapeHtml(src.title || '')}">
+        </div>
+        <div class="form-group" style="margin-bottom:8px">
+          <label class="form-label">${t('col_source_tmdb_type')}</label>
+          <select class="form-select" data-field="src-tmdb-type">
+            ${COL_TMDB_TYPES.map(tp => `<option value="${tp.value}" ${src.tmdbSourceType === tp.value ? 'selected' : ''}>${t(tp.key)}</option>`).join('')}
+          </select>
+        </div>
+        <div class="form-group" style="margin-bottom:8px">
+          <label class="form-label">${t('col_source_tmdb_id')}</label>
+          <input class="form-input" data-field="src-tmdb-id" type="number" value="${src.tmdbId != null ? src.tmdbId : ''}">
+        </div>
+        <div class="form-group" style="margin-bottom:8px">
+          <label class="form-label">${t('col_source_media_type')}</label>
+          <select class="form-select" data-field="src-media-type">
+            ${COL_MEDIA_TYPES.map(mt => `<option value="${mt.value}" ${src.mediaType === mt.value ? 'selected' : ''}>${t(mt.key)}</option>`).join('')}
+          </select>
+        </div>
+        <div class="form-group" style="margin-bottom:8px">
+          <label class="form-label">${t('col_source_sort')}</label>
+          <select class="form-select" data-field="src-sort">
+            ${COL_TMDB_SORTS.map(s => `<option value="${s.value}" ${src.sortBy === s.value ? 'selected' : ''}>${t(s.key)}</option>`).join('')}
+          </select>
+        </div>
+        <input type="hidden" data-field="src-provider" value="tmdb">
+      </div>
+    `;
+  }
+  // trakt
+  return `
+    <div class="source-editor" style="border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:10px;background:var(--bg-card2)">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+        <span class="badge badge-gray">Trakt</span>
+        <button class="btn btn-danger" style="padding:4px 8px;font-size:11px" onclick="removeSourceFromFolder('${escapeAttr(collectionId)}','${escapeAttr(folderId)}','${escapeAttr(src.id)}')">${t('col_source_remove')}</button>
+      </div>
+      <div class="form-group" style="margin-bottom:8px">
+        <label class="form-label">${t('col_source_title')}</label>
+        <input class="form-input" data-field="src-title" value="${escapeHtml(src.title || '')}">
+      </div>
+      <div class="form-group" style="margin-bottom:8px">
+        <label class="form-label">${t('col_source_trakt_id')}</label>
+        <input class="form-input" data-field="src-trakt-id" type="number" value="${src.traktListId != null ? src.traktListId : ''}">
+      </div>
+      <div class="form-group" style="margin-bottom:8px">
+        <label class="form-label">${t('col_source_media_type')}</label>
+        <select class="form-select" data-field="src-media-type">
+          ${COL_MEDIA_TYPES.map(mt => `<option value="${mt.value}" ${src.mediaType === mt.value ? 'selected' : ''}>${t(mt.key)}</option>`).join('')}
+        </select>
+      </div>
+      <div class="form-group" style="margin-bottom:8px">
+        <label class="form-label">${t('col_source_sort')}</label>
+        <select class="form-select" data-field="src-sort">
+          ${COL_TRAKT_SORTS.map(s => `<option value="${s.value}" ${src.sortBy === s.value ? 'selected' : ''}>${t(s.key)}</option>`).join('')}
+        </select>
+      </div>
+      <div class="form-group" style="margin-bottom:8px">
+        <label class="form-label">${t('col_source_sort')} ↑↓</label>
+        <select class="form-select" data-field="src-sort-how">
+          <option value="asc" ${src.sortHow !== 'desc' ? 'selected' : ''}>${t('col_source_sort_asc')}</option>
+          <option value="desc" ${src.sortHow === 'desc' ? 'selected' : ''}>${t('col_source_sort_desc')}</option>
+        </select>
+      </div>
+      <input type="hidden" data-field="src-provider" value="trakt">
+    </div>
+  `;
+}
+
+function onSrcAddonChange(collectionId, folderId, sourceId, addonId) {
+  const editor = document.getElementById('col-editor-' + collectionId);
+  if (!editor) return;
+  const src = findCollectionSource(collectionId, folderId, sourceId);
+  if (!src) return;
+  const addon = state.catalogAddons.find(a => a.addonId === addonId || a.id === addonId);
+  const catalogSelect = editor.querySelector(`.source-editor:has(input[value="${sourceId}"]) [data-field="src-catalog"]`);
+  if (!addon || !catalogSelect) return;
+  src.addonId = addon.addonId;
+  catalogSelect.innerHTML = (addon.manifests || []).map(c => `
+    <option value="${escapeAttr(c.id)}" data-type="${escapeAttr(c.type)}">${escapeHtml(c.name || c.id)} (${escapeHtml(c.type)})</option>
+  `).join('') || `<option value="">${t('catalog_manifest_err')}</option>`;
+}
+
+function findCollectionSource(collectionId, folderId, sourceId) {
+  const collection = state.collections.find(c => c.id === collectionId);
+  const folder = collection?.folders?.find(f => f.id === folderId);
+  return folder?.sources?.find(s => s.id === sourceId);
+}
+
+function findCollectionFolder(collectionId, folderId) {
+  const collection = state.collections.find(c => c.id === collectionId);
+  return collection?.folders?.find(f => f.id === folderId);
+}
+
+function addFolderToCollection(collectionId) {
+  const collection = state.collections.find(c => c.id === collectionId);
+  if (!collection) return;
+  if (!collection.folders) collection.folders = [];
+  const folder = {
+    id: genId(),
+    title: '',
+    coverImageUrl: null,
+    focusGifUrl: null,
+    focusGifEnabled: true,
+    coverEmoji: null,
+    tileShape: 'SQUARE',
+    hideTitle: false,
+    heroBackdropUrl: null,
+    heroVideoUrl: null,
+    titleLogoUrl: null,
+    sources: [],
+    catalogSources: [],
+  };
+  collection.folders.push(folder);
+  openCollectionEditor(collectionId);
+}
+
+function removeFolderFromCollection(collectionId, folderId) {
+  const collection = state.collections.find(c => c.id === collectionId);
+  if (!collection) return;
+  collection.folders = (collection.folders || []).filter(f => f.id !== folderId);
+  openCollectionEditor(collectionId);
+}
+
+function addSourceToFolder(collectionId, folderId, provider) {
+  const folder = findCollectionFolder(collectionId, folderId);
+  if (!folder) return;
+  if (!folder.sources) folder.sources = [];
+  let src = { id: genId(), provider };
+  if (provider === 'addon') {
+    src.addonId = state.catalogAddons[0]?.addonId || '';
+    src.type = '';
+    src.catalogId = '';
+    src.genre = null;
+  } else if (provider === 'tmdb') {
+    src.tmdbSourceType = 'LIST';
+    src.title = '';
+    src.tmdbId = null;
+    src.mediaType = 'MOVIE';
+    src.sortBy = 'popularity.desc';
+    src.filters = null;
+  } else {
+    src.title = '';
+    src.traktListId = null;
+    src.mediaType = 'MOVIE';
+    src.sortBy = 'rank';
+    src.sortHow = 'asc';
+  }
+  folder.sources.push(src);
+  openCollectionEditor(collectionId);
+}
+
+function removeSourceFromFolder(collectionId, folderId, sourceId) {
+  const folder = findCollectionFolder(collectionId, folderId);
+  if (!folder) return;
+  folder.sources = (folder.sources || []).filter(s => s.id !== sourceId);
+  openCollectionEditor(collectionId);
+}
+
+async function saveCollectionEditor(collectionId) {
+  const collection = state.collections.find(c => c.id === collectionId);
+  if (!collection) return;
+  const editor = document.getElementById('col-editor-' + collectionId);
+  if (!editor) return;
+
+  const title = (editor.querySelector('#col-title-' + collectionId)?.value || '').trim();
+  if (!title) { toast(t('col_name_required'), 'err'); return; }
+
+  collection.title = title;
+  collection.pinToTop = editor.querySelector('#col-pin-' + collectionId)?.checked === true;
+  collection.viewMode = editor.querySelector('#col-mode-' + collectionId)?.value || 'TABBED_GRID';
+
+  for (const folder of (collection.folders || [])) {
+    const folderEl = editor.querySelector(`.folder-editor[data-folder-id="${CSS.escape(folder.id)}"]`);
+    if (!folderEl) continue;
+    folder.title = (folderEl.querySelector('[data-field="folder-title"]')?.value || '').trim();
+    folder.tileShape = folderEl.querySelector('[data-field="folder-shape"]')?.value || 'SQUARE';
+    const emoji = (folderEl.querySelector('[data-field="folder-emoji"]')?.value || '').trim();
+    folder.coverEmoji = emoji || null;
+    folder.coverImageUrl = folder.coverImageUrl || null;
+
+    const sources = folder.sources || [];
+    const srcEls = folderEl.querySelectorAll('.source-editor');
+    srcEls.forEach((el, i) => {
+      const src = sources[i];
+      if (!src) return;
+      const provider = el.querySelector('[data-field="src-provider"]')?.value || src.provider;
+      if (provider === 'addon') {
+        const addonSel = el.querySelector('[data-field="src-addon"]');
+        const catSel = el.querySelector('[data-field="src-catalog"]');
+        src.provider = 'addon';
+        src.addonId = addonSel?.value || src.addonId;
+        src.catalogId = catSel?.value || '';
+        const option = catSel?.selectedOptions?.[0];
+        src.type = option?.dataset?.type || '';
+        src.genre = null;
+        delete src.tmdbSourceType; delete src.title; delete src.tmdbId; delete src.mediaType; delete src.sortBy; delete src.sortHow; delete src.traktListId; delete src.filters;
+      } else if (provider === 'tmdb') {
+        src.provider = 'tmdb';
+        src.title = (el.querySelector('[data-field="src-title"]')?.value || '').trim();
+        src.tmdbSourceType = el.querySelector('[data-field="src-tmdb-type"]')?.value || 'LIST';
+        const rawId = (el.querySelector('[data-field="src-tmdb-id"]')?.value || '').trim();
+        src.tmdbId = rawId ? Number(rawId) : null;
+        src.mediaType = el.querySelector('[data-field="src-media-type"]')?.value || 'MOVIE';
+        src.sortBy = el.querySelector('[data-field="src-sort"]')?.value || 'popularity.desc';
+        src.filters = src.filters || null;
+        delete src.addonId; delete src.catalogId; delete src.type; delete src.genre; delete src.traktListId; delete src.sortHow;
+      } else {
+        src.provider = 'trakt';
+        src.title = (el.querySelector('[data-field="src-title"]')?.value || '').trim();
+        const rawId = (el.querySelector('[data-field="src-trakt-id"]')?.value || '').trim();
+        src.traktListId = rawId ? Number(rawId) : null;
+        src.mediaType = el.querySelector('[data-field="src-media-type"]')?.value || 'MOVIE';
+        src.sortBy = el.querySelector('[data-field="src-sort"]')?.value || 'rank';
+        src.sortHow = el.querySelector('[data-field="src-sort-how"]')?.value || 'asc';
+        delete src.addonId; delete src.catalogId; delete src.type; delete src.genre; delete src.tmdbSourceType; delete src.tmdbId; delete src.filters;
+      }
+    });
+  }
+
+  const ok = await saveCollections(state.activeProfileId);
+  toast(ok ? t('col_updated') : t('col_error'), ok ? 'ok' : 'err');
+  await loadData();
+  await renderSection();
+}
+
+async function deleteCollection(collectionId) {
+  if (!confirm(t('col_delete_confirm'))) return;
+  state.collections = state.collections.filter(c => c.id !== collectionId);
+  // Remove from home catalogs if present
+  const catalogs = state.catalogs.items || [];
+  const filtered = catalogs.filter(i => !(i.is_collection && i.collection_id === collectionId));
+  if (filtered.length !== catalogs.length) {
+    state.catalogs.items = filtered;
+    normalizeCatalogOrder();
+    await saveCatalogs(state.activeProfileId);
+  }
+  const ok = await saveCollections(state.activeProfileId);
+  toast(ok ? t('col_deleted') : t('col_error'), ok ? 'ok' : 'err');
+  await loadData();
+  await renderSection();
+}
+
+async function toggleCollectionOnHome(collectionId) {
+  const collection = state.collections.find(c => c.id === collectionId);
+  if (!collection) return;
+  const items = state.catalogs.items || [];
+  const existing = items.find(i => i.is_collection && i.collection_id === collectionId);
+  if (existing) {
+    const realIdx = items.indexOf(existing);
+    if (realIdx >= 0) items.splice(realIdx, 1);
+    toast(t('catalog_removed'), 'ok');
+  } else {
+    items.push({
+      addon_id: '',
+      type: '',
+      catalog_id: '',
+      enabled: true,
+      order: items.length,
+      custom_title: collection.title || '',
+      is_collection: true,
+      collection_id: collection.id,
+      destination: 'home',
+      name: collection.title || t('nav_collections'),
+    });
+    toast(t('catalog_added'), 'ok');
+  }
+  normalizeCatalogOrder();
+  state.catalogs.items = items;
+  const ok = await saveCatalogs(state.activeProfileId);
+  if (!ok) toast(t('save_err'), 'err');
   await loadData();
   await renderSection();
 }
@@ -1671,6 +2508,7 @@ function buildShell(user) {
     { id: 'profiles', label: t('nav_profiles'), icon: '<path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>' },
     { id: 'addons', label: t('nav_addons'), icon: '<rect x="3" y="3" width="18" height="18" rx="3"/><path d="M9 9h6M9 12h6M9 15h4"/>' },
     { id: 'catalogs', label: t('nav_catalogs'), icon: '<path d="M4 6h16M4 12h16M4 18h16"/><path d="M8 6l2 4M16 6l-2 4"/>' },
+    { id: 'collections', label: t('nav_collections'), icon: '<rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 7h10M7 12h10M7 17h6"/>' },
     { id: 'iptv', label: 'IPTV', icon: '<path d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>' },
     { id: 'history', label: t('nav_history'), icon: '<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>' },
     { id: 'watchlist', label: t('nav_watchlist'), icon: '<path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/>' },
